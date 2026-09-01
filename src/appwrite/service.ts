@@ -7,12 +7,6 @@ const appwriteClient = new Client()
 const APPWRITE_ENDPOINT: string = Config.APPWRITE_ENDPOINT!
 const APPWRITE_PROJECT_ID: string = Config.APPWRITE_PROJECT_ID!
 
-const account = new Account(
-    appwriteClient
-    .setEndpoint(APPWRITE_ENDPOINT)
-    .setProject(APPWRITE_PROJECT_ID)
-)
-
 interface CreateUserAccount {
     name: string
     email: string
@@ -21,6 +15,12 @@ interface CreateUserAccount {
 
 const createUserAccount = async({ name, email, password }: CreateUserAccount) => {
     try {
+        const account = new Account(
+            appwriteClient
+            .setEndpoint(APPWRITE_ENDPOINT)
+            .setProject(APPWRITE_PROJECT_ID)
+        )
+
         const createRes = await account.create({
             userId: ID.unique(), 
             name, 
@@ -50,6 +50,12 @@ interface LoginUserAccount {
 
 const loginUserAccount = async({ email, password }: LoginUserAccount) => {
     try {
+        const account = new Account(
+            appwriteClient
+            .setEndpoint(APPWRITE_ENDPOINT)
+            .setProject(APPWRITE_PROJECT_ID)
+        )
+
         const res = await account.createEmailPasswordSession({ email, password })
 
         return res
@@ -65,6 +71,12 @@ const loginUserAccount = async({ email, password }: LoginUserAccount) => {
 
 const getCurrentUser = async() => {
     try {
+        const account = new Account(
+            appwriteClient
+            .setEndpoint(APPWRITE_ENDPOINT)
+            .setProject(APPWRITE_PROJECT_ID)
+        )
+
         const res = await account.get()
 
         return res
@@ -80,6 +92,12 @@ const getCurrentUser = async() => {
 
 const logout = async() => {
     try {
+        const account = new Account(
+            appwriteClient
+            .setEndpoint(APPWRITE_ENDPOINT)
+            .setProject(APPWRITE_PROJECT_ID)
+        )
+        
         await account.deleteSession({sessionId: 'current'})
     } catch (error) {
         Snackbar.show({
