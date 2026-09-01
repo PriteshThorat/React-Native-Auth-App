@@ -29,7 +29,9 @@ const createUserAccount = async({ name, email, password }: CreateUserAccount) =>
         })
 
         if (createRes) {
-            await loginUserAccount({ email, password })
+            const loginRes = await loginUserAccount({ email, password })
+
+            return loginRes
         }
     } catch (error) {
         Snackbar.show({
@@ -48,7 +50,9 @@ interface LoginUserAccount {
 
 const loginUserAccount = async({ email, password }: LoginUserAccount) => {
     try {
-        await account.createEmailPasswordSession({ email, password })
+        const res = await account.createEmailPasswordSession({ email, password })
+
+        return res
     } catch (error) {
         Snackbar.show({
             text: String(error),
@@ -61,7 +65,9 @@ const loginUserAccount = async({ email, password }: LoginUserAccount) => {
 
 const getCurrentUser = async() => {
     try {
-        await account.get()
+        const res = await account.get()
+
+        return res
     } catch (error) {
         Snackbar.show({
             text: String(error),
@@ -85,7 +91,7 @@ const logout = async() => {
     }
 }
 
-export {
+export default {
     createUserAccount,
     loginUserAccount,
     getCurrentUser,
